@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./style.css";
 
-function App() {
+const App = () => {
+  let [lat, setLat] = useState(0);
+  let [long, setLong] = useState(0);
+  let [sdate, setDate] = useState(() => {
+    return new Date().getMonth() + 1;
+  });
+
+  function user() {
+    navigator.geolocation.getCurrentPosition((position) => {
+      setLat(position.coords.latitude);
+      setLong(position.coords.longitude);
+      setDate(position.coords.sdate);
+    });
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h2>{lat}</h2>
+      <h2>{long}</h2>
+      <h2>{sdate}</h2>
+      <button onClick={user}>button</button>
     </div>
   );
-}
+};
 
 export default App;
